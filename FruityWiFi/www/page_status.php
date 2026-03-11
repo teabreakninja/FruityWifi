@@ -393,7 +393,7 @@ function addDivs($service, $alias, $edit, $path)
 			}
 		}
 	
-		if ($_GET['reveal_public_ip'] == 1) {
+		if (($_GET['reveal_public_ip'] ?? '') == 1) {
 			echo "public: " . exec("curl ident.me");
 		} else {
 			echo "public: <a href='page_status.php?reveal_public_ip=1'>reveal ip</a>";
@@ -431,7 +431,9 @@ function addDivs($service, $alias, $edit, $path)
 		
 		for ($i=0; $i < count($data); $i++) {
 			$tmp = explode(" ", $data[$i]);
-			echo $tmp[2] . " " . $tmp[1] . " " . $tmp[3] . "<br>";
+			if (count($tmp) >= 4) {
+				echo ($tmp[2] ?? '') . " " . ($tmp[1] ?? '') . " " . ($tmp[3] ?? '') . "<br>";
+			}
 		}
 		?>
 	</div>
