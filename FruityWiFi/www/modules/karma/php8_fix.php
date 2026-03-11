@@ -58,7 +58,18 @@ function patch_file(string $path): void
         '(file_exists($1) && 0 < filesize($1))',
         $src
     );
-
+    // 5. install.sh — PHP-FPM runs with chdir=/, so relative paths fail.
+    //    Use __DIR__ to build absolute paths to the includes/ directory.
+    $src = str_replace(
+        '$exec = "chmod 755 install.sh";',
+        '$exec = "chmod 755 " . __DIR__ . "/install.sh";',
+        $src
+    );
+    $src = preg_replace(
+        '/\$exec\s*=\s*"\$bin_sudo \.\/install\.sh\s*>/',
+        '$exec = "cd " . __DIR__ . " && $bin_sudo ./install.sh >',
+        $src
+    );
     // 7. print_r($a) — $a is never assigned in any module, dead debug code
     $src = str_replace(
         'print_r($a);',
