@@ -138,24 +138,31 @@ if (count($output) > 0) {
     <table border=0 width='100%' cellspacing=0 cellpadding=0>
     
     <?php
-    $url = "https://raw.github.com/xtr4nge/FruityWifi/master/modules-FruityWifi.xml";
+    $url = "https://raw.githubusercontent.com/xtr4nge/FruityWifi/master/modules-FruityWifi.xml";
 
-    // VERIFY INTERNET CONNECTION
+    if (!isset($mod_installed)) $mod_installed = [];
+
     if (isset($_GET["show"])) {
-        $external_ip = exec("curl ident.me");
-        if ($external_ip != "" and isset($_GET["show"])) {
-            $xml = simplexml_load_file($url);
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT        => 20,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYPEER => true,
+        ]);
+        $xmlContent = curl_exec($ch);
+        $curlError  = curl_errno($ch);
+        curl_close($ch);
+        if (!$curlError && !empty($xmlContent)) {
+            $xml = @simplexml_load_string($xmlContent);
         }
     }
     if (isset($_GET["show-deb"])) {
-        $external_ip = exec("curl ident.me");
-        if($external_ip != "" and isset($_GET["show-deb"])) {
-            exec("apt-cache search fruitywifi-module",$outdeb);
-            //print_r($outdeb);
-        }
+        exec("apt-cache search fruitywifi-module", $outdeb);
     }
-    
-    if (count($xml) > 0 and $xml != "" and isset($_GET["show"])) {
+
+    if (isset($xml) && $xml instanceof SimpleXMLElement && count($xml) > 0 && isset($_GET["show"])) {
         for ($i=0;$i < count($xml); $i++) {
 			
 			echo "<div style='height:22px;'>";
