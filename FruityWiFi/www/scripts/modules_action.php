@@ -46,21 +46,59 @@ if ($module == "") {
 }
 
 if ($action == "install") {
-    $exec = "git clone https://github.com/xtr4nge/module_$module.git /usr/share/fruitywifi/www/modules/$module";
-    //exec("$bin_danger \"" . $exec . "\"" ); //DEPRECATED
-    //exec_fruitywifi($exec);
+    $modulesDir = "/usr/share/fruitywifi/www/modules";
+    $zipUrl     = "https://github.com/xtr4nge/module_{$module}/archive/refs/tags/v{$version}.zip";
+    $zipPath    = "{$modulesDir}/module_{$module}-{$version}.zip";
+    $extractDir = "{$modulesDir}/module_{$module}-{$version}";
+    $destDir    = "{$modulesDir}/{$module}";
 
-    $exec = "wget https://github.com/xtr4nge/module_$module/archive/v$version.zip -O /usr/share/fruitywifi/www/modules/module_$module-$version.zip";
-    exec_fruitywifi($exec);
-    $exec = "unzip /usr/share/fruitywifi/www/modules/module_$module-$version.zip -d /usr/share/fruitywifi/www/modules/";
-    exec_fruitywifi($exec);
-    $exec = "rm /usr/share/fruitywifi/www/modules/module_$module-$version.zip";
-    exec_fruitywifi($exec);
-    $exec = "mv /usr/share/fruitywifi/www/modules/module_$module-$version /usr/share/fruitywifi/www/modules/$module";
-    exec_fruitywifi($exec);
-    
-    $output[0] = "mod-installed";
-    echo json_encode($output);
+    // Download via PHP cURL (no sudo / wget needed)
+    $ch = curl_init($zipUrl);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_CONNECTTIMEOUT => 15,
+        CURLOPT_TIMEOUT        => 120,
+    ]);
+    $zipData   = curl_exec($ch);
+    $curlError = curl_errno($ch);
+    $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($curlError || $httpCode !== 200 || empty($zipData)) {
+        echo json_encode(["error" => "download-failed", "http" => $httpCode, "curl" => $curlError]);
+        exit;
+    }
+
+    if (file_put_contents($zipPath, $zipData) === false) {
+        echo json_encode(["error" => "write-failed"]);
+        exit;
+    }
+
+    // Extract via ZipArchive (no sudo / unzip needed)
+    $zip = new ZipArchive();
+    if ($zip->open($zipPath) !== true) {
+        unlink($zipPath);
+        echo json_encode(["error" => "unzip-failed"]);
+        exit;
+    }
+    $zip->extractTo($modulesDir);
+    $zip->close();
+    unlink($zipPath);
+
+    // GitHub extracts as module_{name}-{version}/, rename to {name}/
+    if (is_dir($extractDir)) {
+        if (is_dir($destDir)) {
+            exec_fruitywifi("rm -rf " . escapeshellarg($destDir));
+        }
+        rename($extractDir, $destDir);
+    } else {
+        echo json_encode(["error" => "rename-failed", "expected" => $extractDir]);
+        exit;
+    }
+
+    echo json_encode(["0" => "mod-installed"]);
     exit;
 }
 
