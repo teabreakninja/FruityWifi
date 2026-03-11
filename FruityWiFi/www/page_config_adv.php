@@ -167,6 +167,7 @@ if(isset($_POST["supplicant_ssid"]) and isset($_POST["supplicant_psk"])) {
 
 // -------------- PASSWORD ------------------
 
+$pass_msg = "";
 if(isset($_POST["pass_old"]) and isset($_POST["pass_new"])) {
     include "users.php";
     if ( ($users["admin"] == md5($_POST["pass_old"])) and ($_POST["pass_new"] == $_POST["pass_new_repeat"])) {
