@@ -1,9 +1,9 @@
 <?php
-if ($page == "") {
+if (!isset($page) || $page == "") {
 	$page = "./page_status.php";
 }
 
-if ($wait == "") {
+if (!isset($wait) || $wait == "") {
 	$wait = 2;
 }
 

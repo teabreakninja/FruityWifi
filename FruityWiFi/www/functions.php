@@ -28,7 +28,7 @@ function regex_standard($var, $url, $regex_extra) {
 
     //$referer = $_SERVER['HTTP_REFERER'];
 
-    if (preg_match($regex, $var) == 0) {
+    if (preg_match($regex, (string)($var ?? '')) == 0) {
 
         //header("Location: ".$referer."?error=1");
         echo "<script>window.location = '$url?msg=1';</script>";

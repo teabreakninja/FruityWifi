@@ -18,6 +18,7 @@
 ?>
 <!DOCTYPE html>
 <?php
+include "../config/config.php";
 include "../functions.php";
 
 // Checking POST & GET variables...
@@ -25,7 +26,7 @@ if ($regex == 1) {
     regex_standard($_GET["module"] ?? '', "../msg.php", $regex_extra);
 }
 
-$module = $_GET['module'];
+$module = $_GET['module'] ?? '';
 ?>
 <m-eta http-equiv="refresh" content="1; url=install.php?module=<?=$module?>">
 <script src="js/jquery.js"></script>
