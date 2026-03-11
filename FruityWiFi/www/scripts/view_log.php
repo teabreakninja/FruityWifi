@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013  xtr4nge [_AT_] gmail.com
 
@@ -18,26 +18,34 @@
 ?>
 <link href="../style.css" rel="stylesheet" type="text/css">
 <pre>
-<?
+<?php
 include "../login_check.php";
 include "../config/config.php";
 include "../functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET["module"], "../msg.php", $regex_extra);
-    regex_standard($_GET["file"], "../msg.php", $regex_extra);
+    regex_standard($_GET["module"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_GET["file"] ?? '', "../msg.php", $regex_extra);
 }
 
 function load_file ($filename) {
-    $fh = fopen($filename, "r") or die("Could not open file.");
-    $data = fread($fh, filesize($filename)) or die("Could not read file.");
+    if (!file_exists($filename)) {
+        die("Could not open file.");
+    }
+    $fh = fopen($filename, "r");
+    if ($fh === false) {
+        die("Could not open file.");
+    }
+    $size = filesize($filename);
+    $data = ($size > 0) ? fread($fh, $size) : '';
     fclose($fh);
+    if ($data === false) { $data = ''; }
     return $data;
 }
 
-$module = $_GET["module"];
-$file = $_GET["file"];
+$module = $_GET["module"] ?? '';
+$file = $_GET["file"] ?? '';
 
 if ($module == "sslstrip") {
     //echo $file.".log";

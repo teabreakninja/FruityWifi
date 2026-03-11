@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013-2015  xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<? include "header.php"; ?>
+<?php include "header.php"; ?>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -67,7 +67,7 @@
                     user: 
                 </td>
                 <td>
-                    <input name="user" class="form-control input-sm" <? if (isset($_GET["error"]) and $_GET["error"] == 1) echo "value='Who are you?...'"?>/>
+                    <input name="user" class="form-control input-sm" <?php if (isset($_GET["error"]) and $_GET["error"] == 1) echo "value='Who are you?...'"?>/>
                 </td>
             <tr>
                 <td>

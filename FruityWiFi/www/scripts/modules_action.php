@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 
 include "../login_check.php";
 include "../config/config.php";
@@ -26,21 +26,21 @@ include "../functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET["action"], "../msg.php", $regex_extra);
-    regex_standard($_GET["module"], "../msg.php", $regex_extra);
-    regex_standard($_GET["version"], "../msg.php", $regex_extra);
+    regex_standard($_GET["action"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_GET["module"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_GET["version"] ?? '', "../msg.php", $regex_extra);
 }
 
-$action = $_GET["action"];
-$module = $_GET["module"];
-$version = $_GET["version"];
+$action = $_GET["action"] ?? '';
+$module = $_GET["module"] ?? '';
+$version = $_GET["version"] ?? '';
 
-if (!isset($action) or $action == "") {
+if ($action == "") {
     header('Location: ../page_modules.php');
     exit;
 }
 
-if (!isset($module) or $module == "") {
+if ($module == "") {
     header('Location: ../page_modules.php');
     exit;
 }

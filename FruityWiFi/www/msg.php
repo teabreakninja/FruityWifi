@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013  xtr4nge [_AT_] gmail.com
 
@@ -17,12 +17,12 @@
 */ 
 ?>
 <link href="style.css" rel="stylesheet" type="text/css">
-<? include "menu.php" ?>
+<?php include "menu.php" ?>
 
 <br><br>
 <div class="box-msg" align="center">
 <b>
-<?
+<?php
 $msg = $_GET["msg"];
 
 if ($msg == 1) {

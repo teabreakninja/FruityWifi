@@ -28,8 +28,8 @@ class WebService {
 		$this->s->useragent = 'RESTful API [FruityWifi]';
 		
 		// Set up login user/pass
-		$this->username = $username;
-		$this->password = $password;
+		$this->username = '';
+		$this->password = '';
 		$this->token = $token;
 		
 	}

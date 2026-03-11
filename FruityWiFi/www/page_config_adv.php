@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2016 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<? include "header.php"; ?>
+<?php include "header.php"; ?>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -31,46 +31,46 @@
 <script src="js/jquery.js"></script>
 <script src="js/jquery-ui.js"></script>
 
-<? include "menu.php"; ?>
+<?php include "menu.php"; ?>
 
-<?
+<?php
 include "login_check.php";
 include "config/config.php";
 ?>
-<?
+<?php
 include "functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_POST["filename"], "msg.php", $regex_extra);
-    regex_standard($_POST["newdata"], "msg.php", $regex_extra);
-    regex_standard($_POST["iface"], "msg.php", $regex_extra);
-    regex_standard($_POST["io_out_iface"], "msg.php", $regex_extra);
-    regex_standard($_POST["io_in_iface"], "msg.php", $regex_extra);
-    regex_standard($_POST["iface_supplicant"], "msg.php", $regex_extra);
-    regex_standard($_POST["newSSID"], "msg.php", $regex_extra);
-    regex_standard($_POST["hostapd_secure"], "msg.php", $regex_extra);
-    regex_standard($_POST["hostapd_wpa_passphrase"], "msg.php", $regex_extra);
-    regex_standard($_POST["supplicant_ssid"], "msg.php", $regex_extra);
-    regex_standard($_POST["supplicant_psk"], "msg.php", $regex_extra);
-    regex_standard($_POST["pass_old"], "msg.php", $regex_extra);
-    regex_standard($_POST["pass_new"], "msg.php", $regex_extra);
-    regex_standard($_POST["pass_new_repeat"], "msg.php", $regex_extra);
-    regex_standard($_GET["service"], "msg.php", $regex_extra);
-    regex_standard($_GET["action"], "msg.php", $regex_extra);
-    //regex_standard($_POST["in_out_mode"], "msg.php", $regex_extra);
-    regex_standard($_POST["api_token"], "msg.php", $regex_extra);
+    regex_standard($_POST["filename"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["newdata"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["iface"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["io_out_iface"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["io_in_iface"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["iface_supplicant"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["newSSID"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["hostapd_secure"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["hostapd_wpa_passphrase"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["supplicant_ssid"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["supplicant_psk"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["pass_old"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["pass_new"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["pass_new_repeat"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_GET["service"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_GET["action"] ?? '', "msg.php", $regex_extra);
+    //regex_standard($_POST["in_out_mode"] ?? '', "msg.php", $regex_extra);
+    regex_standard($_POST["api_token"] ?? '', "msg.php", $regex_extra);
 }
 ?>
-<?
-$filename = $_POST['filename'];
-$newdata = $_POST['newdata'];
+<?php
+$filename = $_POST['filename'] ?? '';
+$newdata = $_POST['newdata'] ?? '';
 ?>
-<?
+<?php
 
 // -------------- IN | OUT ------------------
-if ($_GET["service"] == "io_in") {
-    if ($_GET["action"] == "start") {
+if (($_GET["service"] ?? '') == "io_in") {
+    if (($_GET["action"] ?? '') == "start") {
         // START IFACE (io_in)
         start_iface($io_in_iface, $io_in_ip, $io_in_gw);
     } else {
@@ -79,8 +79,8 @@ if ($_GET["service"] == "io_in") {
     }
 }
 
-if ($_GET["service"] == "io_out") {
-    if ($_GET["action"] == "start") {
+if (($_GET["service"] ?? '') == "io_out") {
+    if (($_GET["action"] ?? '') == "start") {
         // START IFACE (io_in)
         start_iface($io_out_iface, $io_out_ip, $io_out_gw);
     } else {
@@ -91,23 +91,23 @@ if ($_GET["service"] == "io_out") {
 
 // -------------- INTERFACES ------------------
 if(isset($_POST["iface"]) and $_POST["iface"] == "internet"){
-    echo "internet:" . $_POST["io_out_iface"];
+    echo "internet:" . ($_POST["io_out_iface"] ?? '');
 }
 
 if(isset($_POST["iface"]) and $_POST["iface"] == "wifi"){
-    echo "wifi:" . $_POST["io_in_iface"];
+    echo "wifi:" . ($_POST["io_in_iface"] ?? '');
 }
 
 if(isset($_POST["iface"]) and $_POST["iface"] == "wifi_extra"){
-    echo "wifi extra:" . $_POST["io_in_iface_extra"];
+    echo "wifi extra:" . ($_POST["io_in_iface_extra"] ?? '');
 }
 
 if(isset($_POST["iface"]) and $_POST["iface"] == "wifi_supplicant"){
-    echo "wifi supplicant:" . $_POST["iface_supplicant"];
+    echo "wifi supplicant:" . ($_POST["iface_supplicant"] ?? '');
 }
 
-if ($_GET["service"] == "mon0") {
-    if ($_GET["action"] == "start") {
+if (($_GET["service"] ?? '') == "mon0") {
+    if (($_GET["action"] ?? '') == "start") {
         // START MONITOR MODE (mon0)
         start_monitor_mode($io_in_iface_extra);
     } else {
@@ -118,14 +118,14 @@ if ($_GET["service"] == "mon0") {
 
 // -------------- WIRELESS ------------------
 
-if(isset($_POST[newSSID])){
+if(isset($_POST['newSSID'])){
     
-    $hostapd_ssid=$_POST[newSSID];
+    $hostapd_ssid=$_POST['newSSID'];
     
-    $exec = "sed -i 's/hostapd_ssid=.*/hostapd_ssid=\\\"".$_POST[newSSID]."\\\";/g' ./config/config.php";
+    $exec = "sed -i 's/hostapd_ssid=.*/hostapd_ssid=\\\"".$_POST['newSSID']."\\\";/g' ./config/config.php";
     exec_fruitywifi($exec);
 
-    $exec = "/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_change_ssid $_POST[newSSID]";
+    $exec = "/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_change_ssid {$_POST['newSSID']}";
     exec_fruitywifi($exec);
     
     // replace interface in hostapd.conf and hostapd-secure.conf
@@ -191,7 +191,7 @@ if(isset($_POST["api_token"])) {
 
 ?>
 
-<?
+<?php
 // Get all interfaces name
 $ifaces = getIfaceNAME();
 ?>
@@ -209,11 +209,11 @@ $ifaces = getIfaceNAME();
         <form action="scripts/config_iface.php" method="post" style="margin:0px">
             Mode
             <select class="form-control input-sm" style="width:140px" onchange="this.form.submit()" name="io_mode">
-                <option value="1" <? if ($io_mode == 1) echo "selected"?> >IN - OUT | [AP]</option>
-                <option value="2" <? if ($io_mode == 2) echo "selected"?> >IN - --- | [AP]</option>
-                <option value="3" <? if ($io_mode == 3) echo "selected"?> >IN - OUT</option>
-                <option value="4" <? if ($io_mode == 4) echo "selected"?> >IN - ---</option>
-                <option value="5" <? if ($io_mode == 5) echo "selected"?> >-- - OUT</option>
+                <option value="1" <?php if ($io_mode == 1) echo "selected"?> >IN - OUT | [AP]</option>
+                <option value="2" <?php if ($io_mode == 2) echo "selected"?> >IN - --- | [AP]</option>
+                <option value="3" <?php if ($io_mode == 3) echo "selected"?> >IN - OUT</option>
+                <option value="4" <?php if ($io_mode == 4) echo "selected"?> >IN - ---</option>
+                <option value="5" <?php if ($io_mode == 5) echo "selected"?> >-- - OUT</option>
             </select>
         </form>
         
@@ -223,14 +223,14 @@ $ifaces = getIfaceNAME();
         <form action="scripts/config_iface.php" method="post" style="margin:0px">
             &nbsp;[AP]
             <select class="form-control input-sm" style="width:140px" onchange="this.form.submit()" name="ap_mode">
-                <option value="1" <? if ($ap_mode == 1) echo "selected"?> >Hostapd</option>
-                <? if (file_exists("/usr/share/fruitywifi/www/modules/mana/includes/hostapd")) { ?>
-                <option value="3" <? if ($ap_mode == 3) echo "selected"?> >Hostapd-Mana</option>
-                <? } ?>
-                <? if (file_exists("/usr/share/fruitywifi/www/modules/karma/includes/hostapd")) { ?>
-                <option value="4" <? if ($ap_mode == 4) echo "selected"?> >Hostapd-Karma</option>
-                <? } ?>
-                <option value="2" <? if ($ap_mode == 2) echo "selected"?> >Airmon-ng</option>
+                <option value="1" <?php if ($ap_mode == 1) echo "selected"?> >Hostapd</option>
+                <?php if (file_exists("/usr/share/fruitywifi/www/modules/mana/includes/hostapd")) { ?>
+                <option value="3" <?php if ($ap_mode == 3) echo "selected"?> >Hostapd-Mana</option>
+                <?php } ?>
+                <?php if (file_exists("/usr/share/fruitywifi/www/modules/karma/includes/hostapd")) { ?>
+                <option value="4" <?php if ($ap_mode == 4) echo "selected"?> >Hostapd-Karma</option>
+                <?php } ?>
+                <option value="2" <?php if ($ap_mode == 2) echo "selected"?> >Airmon-ng</option>
             </select>
         </form>
     </td>
@@ -242,7 +242,7 @@ $ifaces = getIfaceNAME();
     <tr>
     <td valign="top">
         <!-- SUB IN  -->
-        <div id="div_in" name="div_in" <? if($io_mode == 5) echo "style='visibility: hidden;'"?> >
+        <div id="div_in" name="div_in" <?php if($io_mode == 5) echo "style='visibility: hidden;'"?> >
         <table cellpadding="0" CELLSPACING="0">
             <tr>
             
@@ -251,7 +251,7 @@ $ifaces = getIfaceNAME();
                 <form action="scripts/config_iface.php" method="post" style="margin:0px">
                     <select class="form-control input-sm" onchange="this.form.submit()" name="io_in_iface">
                     <option>-</option>
-                    <?
+                    <?php
                     for ($i = 0; $i < count($ifaces); $i++) {
                         if (strpos($ifaces[$i], "mon") === false) {
                             if ($io_in_iface == $ifaces[$i]) $flag = "selected" ; else $flag = "";
@@ -268,11 +268,11 @@ $ifaces = getIfaceNAME();
             <td style="padding-right:10px" nowrap>
                 <form action="scripts/config_iface.php" method="post" style="margin:0px">
                     <select class="form-control input-sm" onchange="this.form.submit()" name="io_in_set">
-                        <option value="1" <? if($io_in_set == "1") echo "selected" ?> >[Manual]</option>
-                        <option value="0" <? if($io_in_set == "0") echo "selected" ?> >[Current]</option>
+                        <option value="1" <?php if($io_in_set == "1") echo "selected" ?> >[Manual]</option>
+                        <option value="0" <?php if($io_in_set == "0") echo "selected" ?> >[Current]</option>
                     </select>
                 </form>
-                <?
+                <?php
                     if($io_in_set == "0") {                        
                         // Get interface IP
                         $tmp_ip = getIfaceIP($io_in_iface);
@@ -282,23 +282,23 @@ $ifaces = getIfaceNAME();
             </td>
             </tr>
             <form action="scripts/config_iface.php" method="post" style="margin:0px">
-            <tr <? if($io_in_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_in_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px"><input class="form-control input-sm" placeholder="IP" name="io_in_ip" style="width:140px" value="<?=$io_in_ip?>"></td>
             </tr>
-            <tr <? if($io_in_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_in_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px"><input class="form-control input-sm" placeholder="MASK" name="io_in_mask" style="width:140px" value="<?=$io_in_mask?>"></td>
             </tr>
-            <tr <? if($io_in_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_in_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px"><input class="form-control input-sm" placeholder="GW" name="io_in_gw" style="width:140px" value="<?=$io_in_gw?>"></td>
             </tr>
-            <tr <? if($io_in_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_in_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px">
                 <input class="btn btn-primary btn-sm" type="submit" value="Save">
-                <?
+                <?php
                 // Get interface IP
                 $tmp_ip = getIfaceIP($io_in_iface);
                 if (trim($tmp_ip) == trim($io_in_ip)) {
@@ -319,7 +319,7 @@ $ifaces = getIfaceNAME();
     
     <td valign="top">
         <!-- SUB OUT -->
-        <div <? if($io_mode == 2 or $io_mode == 4) echo "style='visibility: hidden;'"?> >
+        <div <?php if($io_mode == 2 or $io_mode == 4) echo "style='visibility: hidden;'"?> >
         <table cellpadding="0" CELLSPACING="0">
             <tr>
 
@@ -328,7 +328,7 @@ $ifaces = getIfaceNAME();
                 <form action="scripts/config_iface.php" method="post" style="margin:0px">
                     <select class="form-control input-sm" onchange="this.form.submit()" name="io_out_iface">
                         <option>-</option>
-                        <?
+                        <?php
                         for ($i = 0; $i < count($ifaces); $i++) {
                             if (strpos($ifaces[$i], "mon") === false) {
                                 if ($io_out_iface == $ifaces[$i]) $flag = "selected" ; else $flag = "";
@@ -345,11 +345,11 @@ $ifaces = getIfaceNAME();
             <td style="padding-right:10px" nowrap>
             <form action="scripts/config_iface.php" method="post" style="margin:0px">
                 <select class="form-control input-sm" onchange="this.form.submit()" name="io_out_set">
-                    <option value="1" <? if($io_out_set == "1") echo "selected" ?> >[Manual]</option>
-                    <option value="0" <? if($io_out_set == "0") echo "selected" ?> >[Current]</option>
+                    <option value="1" <?php if($io_out_set == "1") echo "selected" ?> >[Manual]</option>
+                    <option value="0" <?php if($io_out_set == "0") echo "selected" ?> >[Current]</option>
                 </select>
             </form>
-            <?
+            <?php
                 if($io_out_set == "0") {
                     // Get interface IP
                     $tmp_ip = getIfaceIP($io_out_iface);
@@ -359,23 +359,23 @@ $ifaces = getIfaceNAME();
             </td>
             </tr>
             <form action="scripts/config_iface.php" method="post" style="margin:0px">
-            <tr <? if($io_out_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_out_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px"><input class="form-control input-sm" placeholder="IP" name="io_out_ip" style="width:140px" value="<?=$io_out_ip?>"></td>
             </tr>
-            <tr <? if($io_out_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_out_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px"><input class="form-control input-sm" placeholder="MASK" name="io_out_mask" style="width:140px" value="<?=$io_out_mask?>"></td>
             </tr>
-            <tr <? if($io_out_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_out_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px"><input class="form-control input-sm" placeholder="GW" name="io_out_gw" style="width:140px" value="<?=$io_out_gw?>"></td>
             </tr>
-            <tr <? if($io_out_set == "0") echo "style='display:none;'"?> >
+            <tr <?php if($io_out_set == "0") echo "style='display:none;'"?> >
 
             <td style="padding-right:10px">
                 <input class="btn btn-primary btn-sm" type="submit" value="Save">
-                <?
+                <?php
                 // Get interface IP
                 $tmp_ip = getIfaceIP($io_out_iface);
                 if (trim($tmp_ip) == trim($io_out_ip)) {
@@ -398,13 +398,13 @@ $ifaces = getIfaceNAME();
 
 <form action="scripts/config_iface.php" method="post" style="margin:0px" >
     + [sniff|inject]
-    <?
+    <?php
         //if($ap_mode == "2") $set_action = "disabled" ;
     ?>
     <select class="form-control input-sm" style="width:140px" onchange="this.form.submit()" name="io_action" >
-        <option value="at0" <? if ($io_action == "at0") echo "selected"?> >at0</option>
-        <!-- <option value="wlan0" <? if ($io_action == "wlan0") echo "selected"?> >wlan0</option> -->
-        <?
+        <option value="at0" <?php if ($io_action == "at0") echo "selected"?> >at0</option>
+        <!-- <option value="wlan0" <?php if ($io_action == "wlan0") echo "selected"?> >wlan0</option> -->
+        <?php
         for ($i = 0; $i < count($ifaces); $i++) {
             if (strpos($ifaces[$i], "mon") === false) {
                 if ($io_action == $ifaces[$i]) $flag = "selected" ; else $flag = "";
@@ -427,10 +427,10 @@ $ifaces = getIfaceNAME();
 <div class="rounded-bottom">
 
     <form action="scripts/config_iface.php" method="post" style="margin:0px">
-    <? $iface_mon0 = exec("/sbin/ifconfig | grep mon0 "); ?>
-    <select class="form-control input-sm" style="width: 140px; display:inline;" onchange="this.form.submit()" name="io_in_iface_extra" <? if ($iface_mon0 != "") echo "disabled" ?> >
+    <?php $iface_mon0 = exec("/sbin/ifconfig | grep mon0 "); ?>
+    <select class="form-control input-sm" style="width: 140px; display:inline;" onchange="this.form.submit()" name="io_in_iface_extra" <?php if ($iface_mon0 != "") echo "disabled" ?> >
         <option>-</option>
-        <?
+        <?php
         for ($i = 0; $i < count($ifaces); $i++) {
             if (strpos($ifaces[$i], "mon") === false) {
                 if ($io_in_iface_extra == str_replace("mon","",$ifaces[$i])) $flag = "selected" ; else $flag = "";
@@ -440,7 +440,7 @@ $ifaces = getIfaceNAME();
         ?>
     </select> 
     <img src="img/glyphicons-195-circle-question-mark.png" title="Use this interface for extra features like Kismet, MDK3, etc..." width=14>
-    <?
+    <?php
         if ($iface_mon0 == "") {
             echo "<b><a href='page_config_adv.php?service=mon0&action=start'>start</a></b> [<font color='red'>mon0</font>]";
         } else {
@@ -462,8 +462,8 @@ $ifaces = getIfaceNAME();
 <div class="rounded-top" align="center"> Wireless Setup </div>
 <div class="rounded-bottom">
     <form method="POST" style="margin:1px">
-        Open <input type="radio" data-switch-no-init class="input" name="hostapd_secure" value="0" <? if ($hostapd_secure != 1) echo 'checked'; ?> onchange="this.form.submit()"> 
-        Secure <input type="radio" data-switch-no-init class="input" name="hostapd_secure" value="1" <? if ($hostapd_secure == 1) echo 'checked'; ?> onchange="this.form.submit()">
+        Open <input type="radio" data-switch-no-init class="input" name="hostapd_secure" value="0" <?php if ($hostapd_secure != 1) echo 'checked'; ?> onchange="this.form.submit()"> 
+        Secure <input type="radio" data-switch-no-init class="input" name="hostapd_secure" value="1" <?php if ($hostapd_secure == 1) echo 'checked'; ?> onchange="this.form.submit()">
     <!--</form>
     <form action="#" method="POST" autocomplete="off" style="margin:1px">-->
         <div class="form-group">
@@ -500,7 +500,7 @@ $ifaces = getIfaceNAME();
     <input type="password" class="form-control input-sm" placeholder="new pass" name="pass_new" value="">
     <input type="password" class="form-control input-sm" placeholder="repeat new pass" name="pass_new_repeat" value="">
     <input class="btn btn-primary btn-sm" type="submit" value="Save">
-    <?
+    <?php
         if ($pass_msg != "") {
         echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         if ($pass_msg == 1) echo "<font color='lime'>password changed</font>";

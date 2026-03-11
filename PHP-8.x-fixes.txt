@@ -1,0 +1,32 @@
+Summary of PHP 8.x Compatibility Fixes
+1. Short open tags <?  → <?php (37 files)
+PHP 8 requires short_open_tag = On to use <?. All project PHP files (excluding third-party libraries) were updated to use <?php so they work with default PHP 8 settings.
+
+2. PHP 4-style constructors → __construct() (nusoap library)
+PHP 8 removed support for PHP 4-style constructors (a method named the same as the class). Fixed in nusoap.php and all class.*.php files:
+
+function nusoap_base() → function __construct()
+function nusoap_fault() → function __construct()
+function nusoap_xmlschema() → function __construct()
+function soapval() → function __construct()
+function soap_transport_http() → function __construct()
+function nusoap_server() → function __construct()
+function wsdl() → function __construct()
+function nusoap_parser() → function __construct()
+function nusoap_client() → function __construct()
+function nusoap_wsdlcache() → function __construct()
+All parent::nusoap_base() calls → parent::__construct()
+3. Undefined variable access via $_GET/$_POST (multiple files)
+PHP 8 throws warnings (and in strict mode errors) for unset array keys. All direct $_GET["key"] / $_POST["key"] accesses replaced with null coalescing: $_GET["key"] ?? ''. Applies to login.php, page_config_adv.php, page_status.php, status_wireless.php, modules_action.php, module_init.php, module_status.php, switch_status.php, status_logs.php, status_logs_install.php, view_log.php, action.php, save.php, and all regex_standard() call sites.
+
+4. Bare string constants as array keys in page_config_adv.php
+$_POST[newSSID] (bare unquoted key) fails in PHP 8. Fixed to $_POST["newSSID"].
+
+5. fopen()/fread() null safety (5 files)
+In PHP 8, passing a false return from fopen() to fread() causes a fatal TypeError. Added !== false checks for fopen() results in functions.php, page_logs.php, page_status.php, status_logs_dhcp.php, view_log.php.
+
+6. Undefined $this->username/$this->password in ws.php
+The constructor only took $token but tried to assign $username/$password from non-existent parameters. Fixed by assigning empty strings for the unused properties.
+
+7. Requests_Utility_FilteredIterator::current() return type
+Added #[\ReturnTypeWillChange] attribute to suppress the PHP 8.1 ArrayIterator::current() return type deprecation notice.

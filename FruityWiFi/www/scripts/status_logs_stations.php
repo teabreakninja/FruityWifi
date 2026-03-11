@@ -1,4 +1,4 @@
-<?
+<?php
 include "../config/config.php";
 
 exec("/sbin/iw dev $io_in_iface station dump |grep Stat", $stations);

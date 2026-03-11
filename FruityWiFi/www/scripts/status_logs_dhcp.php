@@ -1,12 +1,16 @@
-<?
+<?php
 include "../config/config.php";
 
 $filename = "$log_path/dhcp.leases";
-$fh = fopen($filename, "r"); //or die("Could not open file.");
-if ( 0 < filesize( $filename ) ) {
-	$data = fread($fh, filesize($filename)); //or die("Could not read file.");
+$data = "";
+if (file_exists($filename) && filesize($filename) > 0) {
+	$fh = fopen($filename, "r");
+	if ($fh !== false) {
+		$data = fread($fh, filesize($filename));
+		if ($data === false) { $data = ""; }
+		fclose($fh);
+	}
 }
-fclose($fh);
 $data = explode("\n",$data);
 
 for ($i=0; $i < count($data); $i++) {

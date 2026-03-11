@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
 
@@ -16,13 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 include "../login_check.php";
 include "../config/config.php";
 include "../functions.php";
 
-$service = $_POST["service"];
-$path = $_POST["path"];
+$service = $_POST["service"] ?? '';
+$path = $_POST["path"] ?? '';
 
 $exec = "tail -n 5 $path";
 //exec("/usr/share/fruitywifi/bin/danger \"" . $exec . "\"", $output); //DEPRECATED

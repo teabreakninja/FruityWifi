@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2016 xtr4nge [_AT_] gmail.com
 
@@ -16,15 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 include "../login_check.php";
 include "../config/config.php";
 include "../functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET["service"], "../msg.php", $regex_extra);
-    regex_standard($_GET["action"], "../msg.php", $regex_extra);
+    regex_standard($_GET["service"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_GET["action"] ?? '', "../msg.php", $regex_extra);
     regex_standard($io_in_iface, "../msg.php", $regex_extra);
     regex_standard($io_out_iface, "../msg.php", $regex_extra);
 }
@@ -32,8 +32,8 @@ if ($regex == 1) {
 #echo $io_out_iface;
 #echo $io_in_iface;
 
-$service = $_GET['service'];
-$action = $_GET['action'];
+$service = $_GET['service'] ?? '';
+$action = $_GET['action'] ?? '';
 
 $bin_danger = "/usr/share/fruitywifi/bin/danger";
 $bin_killall = "/usr/bin/killall";

@@ -1,15 +1,15 @@
-<?
+<?php
 include "../config/config.php";
 include "../functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET["page"], "../msg.php", $regex_extra);
-    regex_standard($_GET["wait"], "../msg.php", $regex_extra);
+    regex_standard($_GET["page"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_GET["wait"] ?? '', "../msg.php", $regex_extra);
 }
 
-$page = $_GET["page"];
-$wait = $_GET["wait"];
+$page = $_GET["page"] ?? '';
+$wait = $_GET["wait"] ?? '';
 
 if ($wait == "") {
 	$wait = 1;

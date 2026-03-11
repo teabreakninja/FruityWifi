@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013  xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 //admin:admin (reset value: 21232f297a57a5a743894a0e4a801fc3)
 //$users["admin"] = "e0af4165b46fb55924f5f9d43ac35f7c"; //test.123456
 $users["admin"]="21232f297a57a5a743894a0e4a801fc3"; //admin (reset: 21232f297a57a5a743894a0e4a801fc3)

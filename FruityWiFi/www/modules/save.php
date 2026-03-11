@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 
 include "../login_check.php";
 //include "../_info_.php";
@@ -27,17 +27,17 @@ include "../functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-	regex_standard($_POST['type'], "../msg.php", $regex_extra);
-	regex_standard($_POST['action'], "../msg.php", $regex_extra);
-	regex_standard($_POST['mod_name'], "../msg.php", $regex_extra);
+	regex_standard($_POST['type'] ?? '', "../msg.php", $regex_extra);
+	regex_standard($_POST['action'] ?? '', "../msg.php", $regex_extra);
+	regex_standard($_POST['mod_name'] ?? '', "../msg.php", $regex_extra);
 }
 
-$type = $_POST['type'];
-$action = $_POST['action'];
-$newdata = html_entity_decode(trim($_POST["newdata"]));
+$type = $_POST['type'] ?? '';
+$action = $_POST['action'] ?? '';
+$newdata = html_entity_decode(trim($_POST["newdata"] ?? ''));
 $newdata = base64_encode($newdata);
 
-$mod_name = $_POST['mod_name'];
+$mod_name = $_POST['mod_name'] ?? '';
 
 // ngrep options
 if ($type == "save_show" and $mod_name != "") {

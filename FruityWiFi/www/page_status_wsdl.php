@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2016 xtr4nge [_AT_] gmail.com
 
@@ -24,9 +24,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>FruityWifi</title>
 </head>
-<? include "login_check.php"; ?>
-<? include "config/config.php" ?>
-<? include "menu.php" ?>
+<?php include "login_check.php"; ?>
+<?php include "config/config.php" ?>
+<?php include "menu.php" ?>
 
 <script src="js/jquery.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -280,20 +280,20 @@ function getStatusInit(operation, service)
 
 <div style="b-order:1px solid; width: 410px; display:inline-block; vertical-align: top;">
 
-<?
+<?php
 include "functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET['service'], "msg.php", $regex_extra);
-    regex_standard($_GET['action'], "msg.php", $regex_extra);
+    regex_standard($_GET['service'] ?? '', "msg.php", $regex_extra);
+    regex_standard($_GET['action'] ?? '', "msg.php", $regex_extra);
 }
 $service = $_GET['service'];
 $action = $_GET['action'];
 
 ?>
 
-<?
+<?php
 
 function addDivs($service, $alias, $edit, $path, $mod_logs_panel)
 {
@@ -356,16 +356,16 @@ function addDivs($service, $alias, $edit, $path, $mod_logs_panel)
 <div class="rounded-top" align="center"> Services </div>
 <div class="rounded-bottom">
 
-<? 
+<?php 
 addDivs("s_wireless", "Wireless", "page_config_adv.php", "../logs/dnsmasq.log", "show");
 ?>
 
-<?
+<?php
 exec("find ./modules -name '_info_.php' | sort", $output);
 if (count($output) > 0) {
 ?>
     <table border=0 width='100%' cellspacing=0 cellpadding=0>
-    <?
+    <?php
     for ($i=0; $i < count($output); $i++) {
 	$mod_type = ""; // checks if module is a service
         include $output[$i];
@@ -385,7 +385,7 @@ if (count($output) > 0) {
     }
     ?>
     </table>
-<?
+<?php
 }
 //unset($output); // Why not only output array?
 ?>
@@ -393,7 +393,7 @@ if (count($output) > 0) {
 
 <br>
 
-<?
+<?php
 // ------------- External Modules --------------
 //exec("find ./modules -name '_info_.php' | sort", $output); // replaced with previous output array
 
@@ -402,11 +402,11 @@ if (count($output) > 0) {
 ?>
 <div class="rounded-top" align="center"> Modules </div>
 <div class="rounded-bottom">
-<?
+<?php
 if (count($output) > 0) {
 ?>
     <table border=0 width='100%' cellspacing=0 cellpadding=0>
-    <?
+    <?php
     //exec("find ./modules -name '_info_.php'",$output);
     //print_r($output[0]);
 
@@ -455,7 +455,7 @@ if (count($output) > 0) {
     ?>
     </table>
 
-<? 
+<?php 
 } else {
 echo "<div>No modules have been installed.<br>Install them from the <a href='page_modules.php'><b>Available Modules</b></a> list.</div>";
 }
@@ -467,7 +467,7 @@ echo "<div>No modules have been installed.<br>Install them from the <a href='pag
 
 <div class="rounded-top" align="center"> Interfaces/IP </div>
 <div class="rounded-bottom">
-<?
+<?php
 	// Get interfaces name
 	$ifaces = getIfaceNAME();
 
@@ -492,7 +492,7 @@ if ($_GET['reveal_public_ip'] == 1) {
 
 <div class="rounded-top" align="center"> Stations </div>
 <div class="rounded-bottom" id="stations-log">
-    <?
+    <?php
     //exec("/sbin/iw dev $io_in_iface station dump |grep Stat", $stations);
     //for ($i=0; $i < count($stations); $i++) echo str_replace("Station", "", $stations[$i]) . "<br>";
     ?>

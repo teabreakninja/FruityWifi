@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 ?>
-<?
+<?php
 session_start();
 
 $_SESSION = array();

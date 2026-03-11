@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2015 xtr4nge [_AT_] gmail.com
 
@@ -16,9 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<? include "header.php"; ?>
-<? include "login_check.php"; ?>
-<? include "config/config.php" ?>
+<?php include "header.php"; ?>
+<?php include "login_check.php"; ?>
+<?php include "config/config.php" ?>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -64,11 +64,11 @@
 </head>
 <body>
 
-<? include "menu.php" ?>
+<?php include "menu.php" ?>
 
 <br>
 
-<?
+<?php
 function addDivs($service, $alias, $edit, $path)
 {
     echo "
@@ -127,24 +127,24 @@ function addDivs($service, $alias, $edit, $path)
 	
 	<div class="rounded-top" align="center"> Services </div>
 	<div class="rounded-bottom">
-	<?
+	<?php
 	include "functions.php";
 	
 	//addDivs("s_wireless", "Wireless", "page_config.php", "../logs/dnsmasq.log");
 	
 	// Checking POST & GET variables...
 	if ($regex == 1) {
-		regex_standard($_GET['service'], "msg.php", $regex_extra);
-		regex_standard($_GET['action'], "msg.php", $regex_extra);
+		regex_standard($_GET['service'] ?? '', "msg.php", $regex_extra);
+		regex_standard($_GET['action'] ?? '', "msg.php", $regex_extra);
 	}
-	$service = $_GET['service'];
-	$action = $_GET['action'];
+	$service = $_GET['service'] ?? '';
+	$action = $_GET['action'] ?? '';
 	
 	?>
 	
-	<?
+	<?php
 	//$iswlanup = exec("/sbin/ifconfig wlan0 | grep UP | awk '{print $1}'");
-	
+	$iswlanup = "";
 	if ($ap_mode == "1") { 
 		$iswlanup = exec("ps auxww | grep hostapd | grep -v -e grep");
 	} else if ($ap_mode == "2") {
@@ -179,12 +179,12 @@ function addDivs($service, $alias, $edit, $path)
 	}
 	?>
 	
-	<?
+	<?php
 	exec("find ./modules -name '_info_.php' | sort",$output);
 	if (count($output) > 0) {
 		?>
 		<t-able border=0 width='100%' cellspacing=0 cellpadding=0>
-		<?
+		<?php
 		
 		for ($i=0; $i < count($output); $i++) {
 			echo "<div style='text-align:left;'>";
@@ -251,12 +251,12 @@ function addDivs($service, $alias, $edit, $path)
 		
 		?>
 		</t-able>
-	<?
+	<?php
 	}
 	?>
 	</div>
 	
-	<?
+	<?php
 	// IF MODULE FRUITYPROXY EXISTS
 	if (file_exists("/usr/share/fruitywifi/www/modules/fruityproxy/")) {
 	?>
@@ -266,8 +266,8 @@ function addDivs($service, $alias, $edit, $path)
 	<div class="rounded-bottom" id="mitmproxy_plugins">
 	
 	</div>
-    <? } ?>
-	<?
+    <?php } ?>
+	<?php
 	// IF MODULE MITMF EXISTS
 	if (file_exists("/usr/share/fruitywifi/www/modules/mitmf/")) {
 	?>
@@ -277,10 +277,10 @@ function addDivs($service, $alias, $edit, $path)
 	<div class="rounded-bottom" id="mitmf_plugins">
 		
 	</div>
-	<? } ?>
+	<?php } ?>
 	
 	<br>
-	<?
+	<?php
 	// ------------- External Modules --------------
 	//exec("find ./modules -name '_info_.php' | sort",$output); // replaced with previous output array
 	
@@ -290,11 +290,11 @@ function addDivs($service, $alias, $edit, $path)
 	<div class="rounded-top" align="center"> Modules </div>
 	<div class="rounded-bottom">
 		
-		<?
+		<?php
 		if (count($output) > 0) {
 		?>
 			<t-able border=0 width='100%' cellspacing=0 cellpadding=0>
-			<?
+			<?php
 			//exec("find ./modules -name '_info_.php'",$output);
 			//print_r($output[0]);
 		
@@ -362,7 +362,7 @@ function addDivs($service, $alias, $edit, $path)
 				}
 			?>
 			</t-able>
-		<? 
+		<?php 
 		} else {
 			echo "<div>No modules have been installed.<br>Install them from the <a href='page_modules.php'><b>Available Modules</b></a> list.</div>";
 		}
@@ -381,7 +381,7 @@ function addDivs($service, $alias, $edit, $path)
 	
 	<div class="rounded-top" align="center"> Interfaces/IP </div>
 	<div class="rounded-bottom">
-		<?
+		<?php
 		// Get interfaces name
 		$ifaces = getIfaceNAME();
 	
@@ -406,7 +406,7 @@ function addDivs($service, $alias, $edit, $path)
 	
 	<div class="rounded-top" align="center"> Stations </div>
 	<div class="rounded-bottom">
-		<?
+		<?php
 		exec("/sbin/iw dev $io_in_iface station dump |grep Stat", $stations);
 		for ($i=0; $i < count($stations); $i++) echo str_replace("Station", "", $stations[$i]) . "<br>";
 		?>
@@ -416,13 +416,17 @@ function addDivs($service, $alias, $edit, $path)
 	
 	<div class="rounded-top" align="center"> DHCP </div>
 	<div class="rounded-bottom">
-		<?
+		<?php
 		$filename = "/usr/share/fruitywifi/logs/dhcp.leases";
-		$fh = fopen($filename, "r"); //or die("Could not open file.");
-		if ( 0 < filesize( $filename ) ) {
-			$data = fread($fh, filesize($filename)); //or die("Could not read file.");
+		$data = "";
+		if (file_exists($filename) && filesize($filename) > 0) {
+			$fh = fopen($filename, "r");
+			if ($fh !== false) {
+				$raw = fread($fh, filesize($filename));
+				if ($raw !== false) { $data = $raw; }
+				fclose($fh);
+			}
 		}
-		fclose($fh);
 		$data = explode("\n",$data);
 		
 		for ($i=0; $i < count($data); $i++) {
@@ -443,7 +447,7 @@ function sortObject(object) {
 }
 </script>
 
-<?
+<?php
 // IF MODULE FRUITYPROXY EXISTS
 if (file_exists("/usr/share/fruitywifi/www/modules/fruityproxy/")) {
 ?>
@@ -484,9 +488,9 @@ function setModulesStatus(module, action) {
     setTimeout(loadPlugins, 500);
 }
 </script>
-<? } ?>
+<?php } ?>
 
-<?
+<?php
 // IF MODULE MITMF EXISTS
 if (file_exists("/usr/share/fruitywifi/www/modules/mitmf/")) {
 ?>
@@ -528,7 +532,7 @@ function setPluginStatus(plugin, action) {
 }
 
 </script>
-<? } ?>
+<?php } ?>
 
 </body>
 </html>

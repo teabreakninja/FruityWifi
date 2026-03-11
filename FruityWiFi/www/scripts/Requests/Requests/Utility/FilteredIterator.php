@@ -28,8 +28,9 @@ class Requests_Utility_FilteredIterator extends ArrayIterator {
 	/**
 	 * Get the current item's value after filtering
 	 *
-	 * @return string
+	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function current() {
 		$value = parent::current();
 		$value = call_user_func($this->callback, $value);

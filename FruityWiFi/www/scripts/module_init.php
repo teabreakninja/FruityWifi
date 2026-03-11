@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2015 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 
 include "../login_check.php";
 include "../config/config.php";
@@ -24,15 +24,15 @@ include "../functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_POST["service"], "../msg.php", $regex_extra);
-    regex_standard($_POST["action"], "../msg.php", $regex_extra);
-    regex_standard($_POST["page"], "../msg.php", $regex_extra);
+    regex_standard($_POST["service"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_POST["action"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_POST["page"] ?? '', "../msg.php", $regex_extra);
 }
 
-$service = $_POST["service"];
+$service = $_POST["service"] ?? '';
 $service = str_replace("mod_", "", $service);
-$action = $_POST["action"];
-$page = $_POST["page"];
+$action = $_POST["action"] ?? '';
+$page = $_POST["page"] ?? '';
 
 /*
 function execCurl($url) {

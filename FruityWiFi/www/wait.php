@@ -31,7 +31,7 @@ body {
 <td>
 
 <pre>
-<?
+<?php
 echo "Loading fruit...<br>";
 include "wait_fruit.php";
 ?>

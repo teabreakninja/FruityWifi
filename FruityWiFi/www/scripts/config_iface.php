@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2016 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -26,12 +26,12 @@ include "../functions.php";
 
 // Checking POST & GET variables [regex]...
 if ($regex == 1) {
-    regex_standard($_POST["iface"], "../msg.php", $regex_extra);
-    regex_standard($_POST["io_out_iface"], "../msg.php", $regex_extra);
-    regex_standard($_POST["io_in_iface"], "../msg.php", $regex_extra);
-    regex_standard($_POST["io_in_iface_extra"], "../msg.php", $regex_extra);
-    regex_standard($_POST["wifi_supplicant"], "../msg.php", $regex_extra);
-    regex_standard($_POST["ap_mode"], "../msg.php", $regex_extra);
+    regex_standard($_POST["iface"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_POST["io_out_iface"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_POST["io_in_iface"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_POST["io_in_iface_extra"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_POST["wifi_supplicant"] ?? '', "../msg.php", $regex_extra);
+    regex_standard($_POST["ap_mode"] ?? '', "../msg.php", $regex_extra);
 }
 
 // ------------ IN | OUT (START) -------------

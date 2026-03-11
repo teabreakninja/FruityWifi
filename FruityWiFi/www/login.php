@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013-2015 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 
 session_start();
 session_regenerate_id(true);
@@ -24,20 +24,20 @@ session_regenerate_id(true);
 include "users.php";
 include "config/config.php";
 
-$user = $_POST["user"];
-$pass = $_POST["pass"];
+$user = $_POST["user"] ?? '';
+$pass = $_POST["pass"] ?? '';
 //$token = $_POST["token"];
 
 switch($_SERVER['REQUEST_METHOD'])
 {
-	case 'GET': $token = $_GET["token"]; break;
-	case 'POST': $token = $_POST["token"]; break;
+	case 'GET': $token = $_GET["token"] ?? ''; break;
+	case 'POST': $token = $_POST["token"] ?? ''; break;
 	default: $token = "";
 }
 
-if ($users[$user] == md5($pass) or $token == $api_token) {
+if (($users[$user] ?? '') == md5($pass) or $token == $api_token) {
 	
-	if ($users[$user] != "") {
+	if (($users[$user] ?? '') != "") {
 		$_SESSION["user_id"] = $user;
 	} else if ($token != "") {
 		$_SESSION["user_id"] = $token;

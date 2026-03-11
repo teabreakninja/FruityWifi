@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013-2015 xtr4nge [_AT_] gmail.com
 	
@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<? include "header.php"; ?>
+<?php include "header.php"; ?>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -27,9 +27,9 @@
 	<title>FruityWifi</title>
 </head>
 <script src="js/jquery.js"></script>
-<? include "login_check.php"; ?>
-<? include "menu.php" ?>
-<?
+<?php include "login_check.php"; ?>
+<?php include "menu.php" ?>
+<?php
 include "config/config.php";
 include "functions.php";
 
@@ -40,14 +40,18 @@ function showLog($filename, $path) {
 	//$filename = "logs/dnsmasq.log";
 	//$filename = $path;
 
-	$fh = fopen($path, "r"); // or die("Could not open file.");
-	if(filesize($path)) {
-		$data = fread($fh, filesize($path)); // or die("Could not read file.");
-		fclose($fh);
-		$data_array = explode("\n", $data);
-		$data = implode("\n",array_reverse($data_array));
-
-		$data = htmlspecialchars($data);
+	$data = '';
+	if (file_exists($path) && filesize($path) > 0) {
+		$fh = fopen($path, "r");
+		if ($fh !== false) {
+			$raw = fread($fh, filesize($path));
+			fclose($fh);
+			if ($raw !== false) {
+				$data_array = explode("\n", $raw);
+				$data = implode("\n", array_reverse($data_array));
+				$data = htmlspecialchars($data);
+			}
+		}
 	}
 	echo "
 		<br>

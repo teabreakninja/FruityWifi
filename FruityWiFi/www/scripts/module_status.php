@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
 
@@ -16,9 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 
-$service = $_POST["service"];
+$service = $_POST["service"] ?? '';
 
 /*
 if (isset($_GET["service"])) {

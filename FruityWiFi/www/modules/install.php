@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
 
@@ -17,12 +17,12 @@
 */ 
 ?>
 <!DOCTYPE html>
-<?
+<?php
 include "../functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET["module"], "../msg.php", $regex_extra);
+    regex_standard($_GET["module"] ?? '', "../msg.php", $regex_extra);
 }
 
 $module = $_GET['module'];

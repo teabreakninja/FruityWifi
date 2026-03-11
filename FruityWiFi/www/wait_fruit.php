@@ -1,4 +1,4 @@
-<?
+<?php
 if ($page == "") {
 	$page = "./page_status.php";
 }
@@ -15,7 +15,7 @@ function delayer(){
 }
 //-->
 </script>
-<pre><? 
+<pre><?php 
 $fruit_num = rand(1, 6);
 if ($fruit_num == 1) {
 ?><font style="color:black">
@@ -30,7 +30,7 @@ if ($fruit_num == 1) {
        '~ .~~~. ~'
            '~'
 </font>
-<? } else if ($fruit_num == 2) { ?>
+<?php } else if ($fruit_num == 2) { ?>
 <font style="color:black">
   _
  //\
@@ -48,7 +48,7 @@ if ($fruit_num == 1) {
                    `--..____..--' 
 
 </font>
-<? } else if ($fruit_num == 2) { ?>
+<?php } else if ($fruit_num == 2) { ?>
 <font style="color:green">
            __
        __ {_/ 
@@ -61,7 +61,7 @@ if ($fruit_num == 1) {
            (_)_)
             (_)
 </font>
-<? } else if ($fruit_num == 3) { ?>
+<?php } else if ($fruit_num == 3) { ?>
 <font style="color:black">
          \VW/ </font><font style="color:black">
        .::::::.
@@ -70,7 +70,7 @@ if ($fruit_num == 1) {
         '::::'
           `"`
 </font>
-<? } else if ($fruit_num == 4) { ?>
+<?php } else if ($fruit_num == 4) { ?>
 <font style="color:black">
        __.--~~.,-.__
        `~-._.-(`-.__`-.
@@ -81,7 +81,7 @@ if ($fruit_num == 1) {
           '--'   \    /
                   '--'
 </font>
-<? } else if ($fruit_num == 5) { ?>
+<?php } else if ($fruit_num == 5) { ?>
 </font><font style="color:black">
            ______
        .-'' ____ ''-.
@@ -90,7 +90,7 @@ if ($fruit_num == 1) {
       \'-=,,____,,=-'/
        '-..______..-'
 </font>
-<? } else if ($fruit_num == 6) { ?>
+<?php } else if ($fruit_num == 6) { ?>
 </font><font style="color:black">
             __ __
          ,-':.x.;`-.
@@ -104,7 +104,7 @@ if ($fruit_num == 1) {
          `-;;_,_..-' 
 
 </font>
-<? } ?>
+<?php } ?>
 
 </pre>
 <script>setTimeout('delayer()', <?=(1000 * $wait)?>)</script>

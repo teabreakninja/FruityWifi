@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
     Copyright (C) 2013-2021 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<?
+<?php
 
 # [Verifica characteres -> [a-z0-9-_. ] ]
 function regex_standard($var, $url, $regex_extra) {
@@ -181,10 +181,12 @@ function open_file($filename) {
 
     if ( file_exists($filename) ) {
         if ( 0 < filesize( $filename ) ) {
-            $fh = fopen($filename, "r"); // or die("Could not open file.");
-            $data = fread($fh, filesize($filename)); // or die("Could not read file.");
-            fclose($fh);
-            return $data;
+            $fh = fopen($filename, "r");
+            if ($fh !== false) {
+                $data = fread($fh, filesize($filename));
+                fclose($fh);
+                if ($data !== false) { return $data; }
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*
 	Copyright (C) 2013-2015 xtr4nge [_AT_] gmail.com
 
@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */ 
 ?>
-<? include "header.php"; ?>
+<?php include "header.php"; ?>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -50,7 +50,7 @@ function openDialog(action, module, version) {
 }
 </script>
 
-<? include "menu.php" ?>
+<?php include "menu.php" ?>
 
 <div id="dialog" title="Wait" style="vertical-align: middle; text-align: center; visibility: hidden"></div>
 <div id="data" title="Basic dialog" style="visibility: hidden"></div>
@@ -78,7 +78,7 @@ function getData(action, module, version) {
 
 <br>
 
-<?
+<?php
 
 include "functions.php";
 
@@ -90,7 +90,7 @@ if (count($output) > 0) {
 <div class="rounded-top" align="center"> Installed Modules </div>
 <div class="rounded-bottom">
     <table border=0 width='100%' cellspacing=0 cellpadding=0>
-    <?
+    <?php
     //exec("find ./modules -name '_info_.php'",$output);
     //print_r($output[0]);
 
@@ -130,14 +130,14 @@ if (count($output) > 0) {
 </div>
 <br>
 
-<? } ?>
+<?php } ?>
 
 <div class="rounded-top" align="center"> Available Modules </div>
 <div class="rounded-bottom">
 
     <table border=0 width='100%' cellspacing=0 cellpadding=0>
     
-    <?
+    <?php
     $url = "https://raw.github.com/xtr4nge/FruityWifi/master/modules-FruityWifi.xml";
 
     // VERIFY INTERNET CONNECTION
