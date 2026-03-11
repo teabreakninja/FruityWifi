@@ -12,6 +12,7 @@ if (file_exists($filename) && filesize($filename) > 0) {
 	}
 }
 $data = explode("\n",$data);
+$output = [];
 
 for ($i=0; $i < count($data); $i++) {
 	if (trim($data[$i]) === '') continue;
