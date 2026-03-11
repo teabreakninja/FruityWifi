@@ -1,49 +1,50 @@
 #!/bin/bash
 
 # Modernized install.sh for FruityWifi karma module
-# Updated from original (2016) to work on current Raspberry Pi OS / Debian bookworm
+# Uses hostapd-mana (maintained successor to hostapd-karma)
+# https://github.com/sensepost/hostapd-mana
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-echo "installing Hostapd/Karma Dependencies..."
+echo "Installing Hostapd/Mana (karma) dependencies..."
 
-# Install current build tools (gcc-4.7 no longer exists)
-apt-get -y install gcc g++ make
+apt-get -y install gcc g++ make wget unzip pkg-config \
+    libnl-3-dev libnl-genl-3-dev \
+    libssl-dev \
+    libdbus-1-dev \
+    libnl-route-3-dev
 
-# Install current netlink and SSL libraries
-# libnl1/libnl-dev replaced by libnl-3-dev + libnl-genl-3-dev on modern Debian/Ubuntu
-apt-get -y install libnl-3-dev libnl-genl-3-dev libssl-dev
+echo "Downloading hostapd-mana source..."
 
-# Install hostapd (required for hostapd_cli binary)
-apt-get -y install hostapd
+wget https://github.com/sensepost/hostapd-mana/archive/refs/heads/master.zip \
+    -O hostapd-mana.zip
 
-echo "installing Hostapd/Karma..."
+unzip -o hostapd-mana.zip
 
-# Download hostapd-karma source
-wget https://github.com/xtr4nge/hostapd-karma/archive/master.zip -O hostapd-karma.zip
+BUILD_DIR="$SCRIPT_DIR/hostapd-mana-master/hostapd"
+cd "$BUILD_DIR"
 
-unzip -o hostapd-karma.zip
+# Copy the defconfig to .config if not already present
+if [ ! -f .config ]; then
+    cp defconfig .config
+fi
 
-# Modern systems always need libnl3 config
-echo "--------------------------------"
-echo "ADDING: CONFIG_LIBNL32=y and libnl3 CFLAGS (required on modern Debian/Pi OS)"
-echo "--------------------------------"
+# Ensure libnl-3 is used (required on modern Debian/Pi OS)
+sed -i 's/^#CONFIG_LIBNL32=y/CONFIG_LIBNL32=y/' .config
+sed -i 's/^#CFLAGS += -I\/usr\/include\/libnl3/CFLAGS += -I\/usr\/include\/libnl3/' .config
 
-EXEC="s,^#CFLAGS += -I/usr/include/libnl3,CFLAGS += -I/usr/include/libnl3,g"
-sed -i "$EXEC" hostapd-karma-master/hostapd/.config
+# Enable mana/karma features
+sed -i 's/^#CONFIG_WPS=y/CONFIG_WPS=y/' .config
+sed -i 's/^#CONFIG_MANA=y/CONFIG_MANA=y/' .config 2>/dev/null || true
 
-EXEC="s,^#CONFIG_LIBNL32=y,CONFIG_LIBNL32=y,g"
-sed -i "$EXEC" hostapd-karma-master/hostapd/.config
+echo "Building hostapd-mana..."
+make -j$(nproc)
 
-echo "[config updated]"
-
-cd hostapd-karma-master/hostapd
-make
-
-cp hostapd "$SCRIPT_DIR/../../"
-cp hostapd_cli "$SCRIPT_DIR/../../"
+echo "Copying binaries to module includes directory..."
+cp hostapd "$SCRIPT_DIR/"
+cp hostapd_cli "$SCRIPT_DIR/"
 
 echo "..DONE.."

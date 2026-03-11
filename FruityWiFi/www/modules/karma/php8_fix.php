@@ -70,6 +70,19 @@ function patch_file(string $path): void
         '$exec = "cd " . __DIR__ . " && $bin_sudo ./install.sh >',
         $src
     );
+
+    // 6. ./hostapd_cli — relative path fails when PHP-FPM chdir=/
+    //    Replace with absolute path via $bin_hostapd_cli from _info_.php
+    $src = str_replace(
+        '$exec = "./hostapd_cli -p /var/run/hostapd karma_enable";',
+        '$exec = "$bin_hostapd_cli -p /var/run/hostapd karma_enable";',
+        $src
+    );
+    $src = str_replace(
+        '$exec = "./hostapd_cli -p /var/run/hostapd karma_disable";',
+        '$exec = "$bin_hostapd_cli -p /var/run/hostapd karma_disable";',
+        $src
+    );
     // 7. print_r($a) — $a is never assigned in any module, dead debug code
     $src = str_replace(
         'print_r($a);',
