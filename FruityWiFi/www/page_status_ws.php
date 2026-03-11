@@ -472,8 +472,8 @@ if ($regex == 1) {
     regex_standard($_GET['service'] ?? '', "msg.php", $regex_extra);
     regex_standard($_GET['action'] ?? '', "msg.php", $regex_extra);
 }
-$service = $_GET['service'];
-$action = $_GET['action'];
+$service = $_GET['service'] ?? '';
+$action = $_GET['action'] ?? '';
 
 ?>
 
@@ -724,7 +724,7 @@ echo "<div>No modules have been installed.<br>Install them from the <a href='pag
 			}
 		}
 	
-	if ($_GET['reveal_public_ip'] == 1) {
+	if (($_GET['reveal_public_ip'] ?? 0) == 1) {
 		echo "public: " . exec("curl ident.me");
 	} else {
 		echo "public: <a href='page_status.php?reveal_public_ip=1'>reveal ip</a>";

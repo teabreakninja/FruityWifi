@@ -51,8 +51,9 @@ if ($service == "s_wireless") {
     $ismoduleup = exec("grep 'FruityWifi-Phishing' /var/www/index.php");
 
 } else {
+    include "../config/config.php";
     include "../modules/$service/_info_.php";
-    $ismoduleup = exec("$mod_isup");   
+    $ismoduleup = exec("$mod_isup");
 }
     
 if ($ismoduleup != "") {
